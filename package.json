@@ -4,13 +4,22 @@
   "description": "A NERDStack boilerplate",
   "main": "./client/index.js",
   "scripts": {
+    "build-client": "webpack",
+    "build-client-watch": "webpack -w",
+    "lint": "eslint ./ --ignore-path .gitignore",
+    "lint-fix": "npm run lint -- --fix",
+    "prepare": "if [ -d .git ]; then npm-merge-driver install; fi",
+    "prettify": "prettier --write \"**/*.{js,jsx,json,css,scss,md}\"",
+    "postinstall": "touch secrets.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server",
-    "start-dev": "webpack -w & nodemon server.js"
+    "start-dev": "NODE_ENV='development' npm run build-client-watch & NODE_ENV='development' npm run start-server",
+    "start-server": "nodemon server -e html,js,scss --ignore public --ignore client"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@amcharts/amcharts4": "^4.4.1",
     "axios": "^0.18.0",
     "compression": "^1.7.3",
     "connect-session-sequelize": "^6.0.0",
@@ -30,6 +39,7 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "restler": "^3.4.0",
     "sequelize": "^5.3.1",
     "socket.io": "^2.2.0"
   },

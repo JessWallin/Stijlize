@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api', apiRoutes);
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, './index.html'));
+  res.sendFile(path.join(__dirname, '..', 'public/index.html'));
 });
 
 app.use(function(err, req, res, next) {
@@ -26,5 +26,5 @@ app.use(function(err, req, res, next) {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, function() {
-  console.log(`Making magic on port ${PORT}`);
+  console.log(`Making art on port ${PORT}`);
 });

@@ -1,8 +1,28 @@
 const router = require('express').Router();
+const axios = require('axios');
+const secrets = require('../secrets');
 
-router.use('/users', require('./users')); // Users? Check.
-// router.use('/puppies', require('./puppies')); // Puppies? Check.
-// router.use('/kittens', require('./kittens')); // Kittens? Check.
+const id = 228650;
+
+router.get('/', async (req, res, next) => {
+  try {
+    console.log('route!');
+    const { data } = await axios.get(
+      `https://api.harvardartmuseums.org/object/${id}?apikey=${
+        process.env.harvard
+      }`
+    );
+    const fields = {
+      title: data.title,
+      artist: data.signed,
+      date: data.date,
+      colors: data.colors,
+    };
+    res.json(fields);
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.use(function(req, res, next) {
   const err = new Error('Not found.');
