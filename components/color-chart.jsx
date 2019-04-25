@@ -14,37 +14,35 @@ class ColorChart extends Component {
     super(props);
     this.state = {};
   }
+
   componentDidMount() {
-    console.log(this.props);
+    let chart = am4core.create('chartdiv', am4charts.TreeMap);
+    console.log('Color component props!', this.props);
     // const data = getData();
 
-    let chart = am4core.create('chartdiv', am4charts.TreeMap);
-
-    chart.data = this.props.colors;
+    chart.data = this.props.work.colors;
 
     chart.dataFields.value = 'percent';
     chart.dataFields.name = 'hue';
     chart.dataFields.color = 'color';
 
-    // let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-    // dateAxis.renderer.grid.template.location = 0;
-
-    // let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    // valueAxis.tooltip.disabled = true;
-    // valueAxis.renderer.minWidth = 35;
-
-    // let series = chart.series.push(new am4charts.LineSeries());
-    // series.dataFields.dateX = 'date';
-    // series.dataFields.valueY = 'value';
-
-    // series.tooltipText = '{valueY.value}';
-    // chart.cursor = new am4charts.XYCursor();
-
-    // let scrollbarX = new am4charts.XYChartScrollbar();
-    // scrollbarX.series.push(series);
-    // chart.scrollbarX = scrollbarX;
-
     this.chart = chart;
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.work.title !== prevProps.work.title) {
+      let chart = am4core.create('chartdiv', am4charts.TreeMap);
+      console.log('Color component props!', this.props);
+      // const data = getData();
+
+      chart.data = this.props.work.colors;
+
+      chart.dataFields.value = 'percent';
+      chart.dataFields.name = 'hue';
+      chart.dataFields.color = 'color';
+
+      this.chart = chart;
+    }
   }
 
   componentWillUnmount() {
@@ -54,7 +52,6 @@ class ColorChart extends Component {
   }
 
   render() {
-    console.log('component connected');
     return <div id="chartdiv" style={{ width: '100%', height: '500px' }} />;
   }
 }
