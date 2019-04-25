@@ -26,6 +26,10 @@ class ColorChart extends Component {
     chart.dataFields.name = 'hue';
     chart.dataFields.color = 'color';
 
+    const findEvent = ev => {
+      console.log('clicked on ', ev.target);
+    };
+
     this.chart = chart;
   }
 
@@ -42,6 +46,7 @@ class ColorChart extends Component {
       chart.dataFields.color = 'color';
 
       this.chart = chart;
+      console.log('***CHART!***', this.chart);
     }
   }
 

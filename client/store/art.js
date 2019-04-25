@@ -5,6 +5,13 @@ import logger from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 const SWTICH_ART = 'SWITCH_ART';
+const SWITCH_LIST = 'SWITCH_LIST';
+
+const initialState = {
+  selected: {},
+  currentList: {},
+  query: '',
+};
 
 const switchArt = data => {
   return {
@@ -13,17 +20,35 @@ const switchArt = data => {
   };
 };
 
+const switchList = data => {
+  return {
+    type: SWITCH_LIST,
+    data,
+  };
+};
+
 export const getArt = id => {
   return async dispatch => {
-    const { data } = await axios.get('/api');
+    console.log('**ID**', id);
+    const { data } = await axios.post('/api', { id: id });
     dispatch(switchArt(data));
   };
 };
 
-const reducer = (state = {}, action) => {
+export const getList = keyword => {
+  return async dispatch => {
+    const { data } = await axios.post('/api/keyword', { keyword: keyword });
+    dispatch(switchList(data));
+  };
+};
+
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case SWTICH_ART: {
-      return action.data;
+      return { ...state, selected: action.data };
+    }
+    case SWITCH_LIST: {
+      return { ...state, list: action.data };
     }
     default:
       return state;
