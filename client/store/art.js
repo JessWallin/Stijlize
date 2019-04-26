@@ -28,7 +28,6 @@ const switchList = data => {
 };
 
 export const getList = keyword => {
-  console.log('***SERVER KEY!');
   return async dispatch => {
     const { data } = await axios.post('/api/keyword', { keyword: keyword });
     dispatch(switchList(data));
@@ -39,6 +38,13 @@ export const getArt = (id = 228650) => {
   return async dispatch => {
     const { data } = await axios.post('/api', { id: id });
     dispatch(switchArt(data));
+  };
+};
+
+export const getByColor = color => {
+  return async dispatch => {
+    const { data } = await axios.post('/api/color', { color: color });
+    dispatch(switchList(data));
   };
 };
 

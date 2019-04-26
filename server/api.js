@@ -36,21 +36,24 @@ router.post('/keyword', async (req, res, next) => {
 
 router.post('/color', async (req, res, next) => {
   try {
+    console.log('***COLOR ROUTE***');
     const color = req.body.color;
+    console.log(color);
     const { data } = await axios.get(
-      `https://api.harvardartmuseums.org/object?COLOR=${color}&apikey=${
+      `https://api.harvardartmuseums.org/object?q=COLOR=${color}&apikey=${
         process.env.harvard
-      }
       }`
     );
-    const fields = {
-      title: data.title,
-      artist: data.signed,
-      date: data.date,
-      colors: data.colors,
-      id: data.id,
-    };
-    res.json(fields);
+    const list = data.records.reduce(function(currentList, currentWork) {
+      if (currentWork.colorcount > 3) {
+        currentList.push({
+          id: currentWork.id,
+          imageUrl: currentWork.primaryimageurl,
+        });
+      }
+      return currentList;
+    }, []);
+    res.json(list);
   } catch (error) {
     next(error);
   }
