@@ -23,14 +23,16 @@ class ColorChart extends Component {
     chart.data = this.props.work.colors;
 
     chart.dataFields.value = 'percent';
-    chart.dataFields.name = 'hue';
+    chart.dataFields.name = 'color';
     chart.dataFields.color = 'color';
+
+    const colorNodes = chart.seriesTemplates.create('0');
 
     const findEvent = ev => {
       console.log('clicked on ', ev.target);
     };
 
-    chart.events.on('hit', findEvent, this);
+    colorNodes.events.on('hit', findEvent, this);
 
     this.chart = chart;
   }
@@ -44,14 +46,21 @@ class ColorChart extends Component {
       chart.data = this.props.work.colors;
 
       chart.dataFields.value = 'percent';
-      chart.dataFields.name = 'hue';
+      chart.dataFields.name = 'color';
       chart.dataFields.color = 'color';
 
+      const colorNodes = chart.seriesTemplates.create('0');
+      const colorNodesColumn = colorNodes.columns.template;
+      colorNodesColumn.clickable = true;
+
       const findEvent = ev => {
-        console.log('clicked on ', ev.target);
+        console.log('clicked on ', ev.target.properties.fill.hex);
+        let queryColor = ev.target.properties.fill.hex;
+        queryColor = queryColor.slice(1);
+        this.props.select(queryColor);
       };
 
-      chart.events.on('hit', findEvent, this);
+      colorNodesColumn.events.on('hit', findEvent, this);
 
       this.chart = chart;
     }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ColorChart from './color-chart';
 import { connect } from 'react-redux';
-import { getArt, getList } from '../client/store/art';
+import { getArt, getList, getByColor } from '../client/store/art';
 import { map } from '@amcharts/amcharts4/.internal/core/utils/Iterator';
 import Slider from './connectedSlider';
 import ColorTree from './fd-colors';
@@ -34,9 +34,12 @@ class disconnectedFrame extends Component {
     } else {
       return (
         <div className="allContent">
-          <h1>Art + Data</h1>
+          <h1>Stijlize</h1>
           <div className="gallery">
-            <ColorChart work={this.props.selected} />
+            <ColorChart
+              work={this.props.selected}
+              select={this.props.getByColor}
+            />
             <div className="caption">
               <h2>{this.props.selected.title}</h2>
               <h4>{this.props.selected.artist}</h4>
@@ -69,8 +72,10 @@ const mapDispatch = dispatch => {
       dispatch(getArt(id));
     },
     getList: function(keyword) {
-      console.log('GETLIST');
       dispatch(getList(keyword));
+    },
+    getByColor: function(color) {
+      dispatch(getByColor(color));
     },
   };
 };
