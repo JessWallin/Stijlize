@@ -3,20 +3,18 @@ import ColorChart from './color-chart';
 import { connect } from 'react-redux';
 import { getArt, getList } from '../client/store/art';
 import { map } from '@amcharts/amcharts4/.internal/core/utils/Iterator';
+import Slider from './connectedSlider';
 import ColorTree from './fd-colors';
-
-const id = 27651;
 
 class disconnectedFrame extends Component {
   constructor(props) {
     super(props);
     this.state = { keyword: '' };
-    this.handleChange.bind(this);
-    this.handleSubmit.bind(this);
+    this.hangleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount() {
-    console.log(this.props.getArt());
-    console.log(this.props.selected);
+    this.props.getArt();
   }
 
   handleChange(changeEvent) {
@@ -24,8 +22,9 @@ class disconnectedFrame extends Component {
   }
 
   handleSubmit(submitEvent) {
+    console.log(submitEvent);
     submitEvent.preventDefault();
-    this.props.getList(this.state.keyword);
+    this.props.getList(this.state);
   }
 
   render() {
@@ -43,30 +42,35 @@ class disconnectedFrame extends Component {
               <h4>{this.props.selected.artist}</h4>
             </div>
           </div>
+          <Slider list={this.props.list} getArt={this.props.getArt} />
           <input
             type="text"
-            name="Keyword"
-            value={this.state.value}
-            onChange={this.handeChange}
-            onSubmit={this.handleSubmit}
-            placeholder="Search by keyword"
+            name="keyword"
+            onChange={event => this.handleChange(event)}
+            value={this.state.keyword}
           />
-          <button type="submit">Search</button>
+          <button type="submit" onClick={event => this.handleSubmit(event)}>
+            Search
+          </button>
         </div>
       );
     }
   }
 }
 
-const mapState = state => ({ selected: state.selected, list: state.list });
+const mapState = state => ({
+  selected: state.selected,
+  list: state.currentList,
+});
 
 const mapDispatch = dispatch => {
   return {
-    getArt: function() {
+    getArt: function(id) {
       dispatch(getArt(id));
     },
-    getList: function(keyword = 'female') {
-      dispatch(getArt(keyword));
+    getList: function(keyword) {
+      console.log('GETLIST');
+      dispatch(getList(keyword));
     },
   };
 };
