@@ -9,7 +9,7 @@ const SWITCH_LIST = 'SWITCH_LIST';
 
 const initialState = {
   selected: {},
-  currentList: {},
+  currentList: [],
   query: '',
 };
 
@@ -27,18 +27,18 @@ const switchList = data => {
   };
 };
 
-export const getArt = id => {
-  return async dispatch => {
-    console.log('**ID**', id);
-    const { data } = await axios.post('/api', { id: id });
-    dispatch(switchArt(data));
-  };
-};
-
 export const getList = keyword => {
+  console.log('***SERVER KEY!');
   return async dispatch => {
     const { data } = await axios.post('/api/keyword', { keyword: keyword });
     dispatch(switchList(data));
+  };
+};
+
+export const getArt = (id = 228650) => {
+  return async dispatch => {
+    const { data } = await axios.post('/api', { id: id });
+    dispatch(switchArt(data));
   };
 };
 
@@ -48,7 +48,7 @@ const reducer = (state = initialState, action) => {
       return { ...state, selected: action.data };
     }
     case SWITCH_LIST: {
-      return { ...state, list: action.data };
+      return { ...state, currentList: action.data };
     }
     default:
       return state;

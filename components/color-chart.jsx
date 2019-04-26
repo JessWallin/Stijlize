@@ -30,11 +30,13 @@ class ColorChart extends Component {
       console.log('clicked on ', ev.target);
     };
 
+    chart.events.on('hit', findEvent, this);
+
     this.chart = chart;
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.work.title !== prevProps.work.title) {
+    if (this.props.work.id !== prevProps.work.id) {
       let chart = am4core.create('chartdiv', am4charts.TreeMap);
       console.log('Color component props!', this.props);
       // const data = getData();
@@ -45,8 +47,13 @@ class ColorChart extends Component {
       chart.dataFields.name = 'hue';
       chart.dataFields.color = 'color';
 
+      const findEvent = ev => {
+        console.log('clicked on ', ev.target);
+      };
+
+      chart.events.on('hit', findEvent, this);
+
       this.chart = chart;
-      console.log('***CHART!***', this.chart);
     }
   }
 

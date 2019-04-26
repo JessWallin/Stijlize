@@ -10,3 +10,20 @@
 h1 {
   text-align: center;
 }
+
+.sliderContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.sliderImageContainer {
+  height: 50px;
+  margin: 2px;
+}
+
+.sliderImage {
+  max-height: 100%;
+  width: auto;
+}
