@@ -10,7 +10,7 @@ Stijlize is also a tool for bringing fine-arts driven color pallettes into your 
 ## API
 Stijlize querys the [Harvard Art Museum API](https://github.com/harvardartmuseums/api-docs)
 
-## Texh 
+## Tech 
 Stijlize was built using <br>
 [Express](https://expressjs.com/) <br>
 [React](https://reactjs.org) <br>
