@@ -7,7 +7,8 @@ const buildList = data => {
     if (
       currentWork.colorcount &&
       currentWork.colorcount > 3 &&
-      currentWork.colors.length > 0
+      currentWork.colors.length > 0 &&
+      currentWork.primaryimageurl
     ) {
       currentList.push({
         id: currentWork.id,
@@ -37,7 +38,6 @@ router.post('/keyword', async (req, res, next) => {
 router.post('/color', async (req, res, next) => {
   try {
     const color = req.body.color;
-    console.log('**COLOR!**', color);
     const { data } = await axios.get(
       `https://api.harvardartmuseums.org/object?q=COLOR=${color}&size=100&apikey=${
         process.env.harvard

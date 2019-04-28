@@ -31,6 +31,12 @@
   width: auto;
 }
 
+.sliderImageSelected {
+  max-height: 100%;
+  width: auto;
+  border: 4px solid black;
+}
+
 .amcharts-amexport-item {
   border: 2px solid #777;
 }
@@ -93,20 +99,6 @@ h4#artist:hover {
 .gallery {
   margin: 0 auto;
 }
-
-.popupContent {
-  position: absolute;
-  left: 20%;
-  right: 20%;
-  top: 15%;
-  min-height: 510px;
-  margin: 0 auto;
-  background: white;
-  text-align: center;
-  padding: 5px;
-  z-index: 100;
-}
-
 .popImage {
   max-width: 60%;
   max-height: 20%;
@@ -115,10 +107,6 @@ h4#artist:hover {
 
 p#popDescription {
   font-size: 14px;
-}
-
-g {
-  width: 100%;
 }
 
 .about {
@@ -152,4 +140,26 @@ div.search {
   padding: 10px 0px;
   display: flex;
   justify-content: flex-start;
+}
+
+.loader {
+  max-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loaderContainer {
+  display: block;
+}
+
+@media only screen and (max-width: 600px) {
+  .allContent {
+    width: 80%;
+  }
+  .popupContent {
+    left: 10%;
+    right: 10%;
+    top: 12%;
+  }
 }

@@ -12,19 +12,31 @@ import {
 import Slider from './connectedSlider';
 import InfoPop from './infopop';
 import About from './about';
-import SearchBar from './search';
+import { GridLoader } from 'react-spinners';
 
 class disconnectedFrame extends Component {
   constructor(props) {
     super(props);
-    this.state = { keyword: '', popUp: false, about: false };
+    this.state = {
+      keyword: '',
+      popUp: false,
+      about: false,
+      loading: true,
+    };
     this.hangleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.togglePopup = this.togglePopup.bind(this);
     this.toggleAbout = this.toggleAbout.bind(this);
+    this.findComponent = this.findComponent.bind(this);
   }
   componentDidMount() {
     this.props.getArt();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.loading !== this.props.loading) {
+      this.setState({ ...this.state, loading: !this.state.loading });
+    }
   }
 
   handleChange(changeEvent) {
@@ -51,30 +63,52 @@ class disconnectedFrame extends Component {
     });
   }
 
+  findComponent() {
+    if (this.state.about) {
+      return <About close={this.toggleAbout} />;
+    } else if (this.state.popUp) {
+      return (
+        <InfoPop
+          url={this.props.selected.url}
+          title={this.props.selected.title}
+          description={this.props.selected.description}
+          close={this.togglePopup}
+        />
+      );
+    } else {
+      return (
+        <ColorChart work={this.props.selected} select={this.props.getByColor} />
+      );
+    }
+  }
+
   render() {
     return (
       <div className="allContent">
         <h1 onClick={this.toggleAbout}>Stijlize</h1>
         <div className="gallery">
-          {!this.props.selected.title ? (
-            <div className="loading">...loading</div>
+          {this.state.loading ? (
+            <div className="loader">
+              <div className="loadContainer">
+                <GridLoader sizeUnit={'px'} size={15} color={'#000'} />
+              </div>
+            </div>
           ) : null}
-          {!this.state.about ? (
-            <ColorChart
-              work={this.props.selected}
-              select={this.props.getByColor}
-            />
-          ) : (
+          {this.state.about ? (
             <About close={this.toggleAbout} />
-          )}
-          {this.state.popUp ? (
+          ) : this.state.popUp ? (
             <InfoPop
               url={this.props.selected.url}
               title={this.props.selected.title}
               description={this.props.selected.description}
               close={this.togglePopup}
             />
-          ) : null}
+          ) : (
+            <ColorChart
+              work={this.props.selected}
+              select={this.props.getByColor}
+            />
+          )}
           <div className="caption">
             <h2 id="title" onClick={this.togglePopup}>
               {this.props.selected.title}
@@ -95,15 +129,12 @@ class disconnectedFrame extends Component {
             </h4>
           </div>
         </div>
-        {this.props.list.length > 0 ? (
-          <Slider list={this.props.list} getArt={this.props.getArt} />
-        ) : // <p id="error">No results</p>
-        null}
-        {/* <SearchBar
-            handleChange={this.handleChange}
-            keyword={this.state.keyword}
-            handleSubmit={this.handleSubmit}
-          /> */}
+        <Slider
+          list={this.props.list}
+          getArt={this.props.getArt}
+          selected={this.props.selected.id}
+          loading={this.state.loading}
+        />
         <div className="search">
           <input
             type="text"
@@ -124,6 +155,7 @@ class disconnectedFrame extends Component {
 const mapState = state => ({
   selected: state.selected,
   list: state.currentList,
+  loading: state.loading,
 });
 
 const mapDispatch = dispatch => {
