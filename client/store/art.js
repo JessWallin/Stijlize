@@ -11,7 +11,7 @@ const SET_LOADING = 'SET_LOADING';
 
 const initialState = {
   selected: {},
-  currentList: [0],
+  currentList: [{ id: 0 }],
   loading: true,
 };
 
