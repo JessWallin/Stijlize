@@ -1,34 +1,34 @@
 const router = require('express').Router();
 const axios = require('axios');
 const secrets = require('../secrets');
-const keywordRouter = require('./keyword');
 
-const person = 27651;
+const buildList = data => {
+  const list = data.reduce(function(currentList, currentWork) {
+    if (
+      currentWork.colorcount &&
+      currentWork.colorcount > 3 &&
+      currentWork.colors.length > 0
+    ) {
+      currentList.push({
+        id: currentWork.id,
+        imageUrl: currentWork.primaryimageurl,
+      });
+    }
+    return currentList;
+  }, []);
+  return list;
+};
 
 // Gets a single art piece
-
 router.post('/keyword', async (req, res, next) => {
   try {
     const keyword = req.body.keyword.keyword;
-    console.log('********KEYWORD Route*******', keyword);
     const { data } = await axios.get(
-      `https://api.harvardartmuseums.org/object?keyword=$${keyword}&size=50&apikey=${
+      `https://api.harvardartmuseums.org/object?keyword=$${keyword}&size=100&apikey=${
         process.env.harvard
       }`
     );
-    // const list = data.records.filter(work => work.colorcount > 3);
-    // console.log(data.info.next);
-    const list = data.records.reduce(function(currentList, currentWork) {
-      if (currentWork.colorcount > 3) {
-        currentList.push({
-          id: currentWork.id,
-          imageUrl: currentWork.primaryimageurl,
-        });
-      }
-      return currentList;
-    }, []);
-    console.log(list);
-    res.json(list);
+    res.json(buildList(data.records));
   } catch (error) {
     next(error);
   }
@@ -36,37 +36,39 @@ router.post('/keyword', async (req, res, next) => {
 
 router.post('/color', async (req, res, next) => {
   try {
-    console.log('***COLOR ROUTE***');
     const color = req.body.color;
-    console.log(color);
+    console.log('**COLOR!**', color);
     const { data } = await axios.get(
-      `https://api.harvardartmuseums.org/object?q=COLOR=${color}&apikey=${
+      `https://api.harvardartmuseums.org/object?q=COLOR=${color}&size=100&apikey=${
         process.env.harvard
       }`
     );
-    const list = data.records.reduce(function(currentList, currentWork) {
-      if (currentWork.colorcount > 3) {
-        currentList.push({
-          id: currentWork.id,
-          imageUrl: currentWork.primaryimageurl,
-        });
-      }
-      return currentList;
-    }, []);
-    res.json(list);
+    res.json(buildList(data.records));
   } catch (error) {
     next(error);
   }
 });
 
-router.get('/person', async (req, res, next) => {
+router.post('/person', async (req, res, next) => {
   try {
-    const { data } = await axios.get(
-      `https://api.harvardartmuseums.org/person/${person}/?apikey=${
+    const person = req.body.person;
+    let { data } = await axios.get(
+      `https://api.harvardartmuseums.org/object?q=personID=${person}&size=100&apikey=${
         process.env.harvard
       }`
     );
-    res.json(data);
+    let records = buildList(data.records);
+    let pageCount = 1;
+    while (records.length < 1 && data.records.length === 100) {
+      let { data } = await axios.get(
+        `https://api.harvardartmuseums.org/object?q=personID=${person}&size=400&apikey=${
+          process.env.harvard
+        }&page=${pageCount}`
+      );
+      pageCount *= 2;
+      records = buildList(data.records);
+    }
+    res.json(records);
   } catch (err) {
     next(err);
   }
@@ -82,28 +84,53 @@ router.get('/today', async (req, res, next) => {
         process.env.harvard
       }`
     );
-    res.json(data);
+    res.json(buildList(data.records));
   } catch (err) {
     next(err);
   }
 });
 
+router.post('/year', async (req, res, next) => {
+  try {
+    const year = req.body.year;
+    const { data } = await axios.get(
+      `https://api.harvardartmuseums.org/object?q=yearmade=${year}&apikey=${
+        process.env.harvard
+      }`
+    );
+    res.json(buildList(data.records));
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post('/', async (req, res, next) => {
   try {
-    console.log('route!');
     const id = req.body.id;
-    console.log('ID!', id);
     const { data } = await axios.get(
       `https://api.harvardartmuseums.org/object/${id}?apikey=${
         process.env.harvard
       }`
     );
+    let artist;
+    let artistId;
+    if (!data.people) {
+      artist = 'Artist unlisted.';
+      artistId = null;
+    } else {
+      artist = data.people[0].name;
+      artistId = data.people[0].personid;
+    }
     const fields = {
       title: data.title,
-      artist: data.signed,
-      date: data.date,
+      artist: artist,
+      artistId: artistId,
+      date: data.dated,
+      year: data.datebegin,
       colors: data.colors,
       id: data.id,
+      description: data.labeltext,
+      url: data.primaryimageurl,
     };
     res.json(fields);
   } catch (error) {

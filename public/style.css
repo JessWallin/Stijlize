@@ -1,14 +1,11 @@
 * {
   box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
 }
 
 .allContent {
-  width: 80%;
+  width: 60%;
   margin: 0 auto;
-}
-
-h1 {
-  text-align: center;
 }
 
 .sliderContainer {
@@ -21,9 +18,138 @@ h1 {
 .sliderImageContainer {
   height: 50px;
   margin: 2px;
+  padding: 2px;
+  background-color: white;
+}
+
+.sliderImageContainer:hover {
+  cursor: pointer;
 }
 
 .sliderImage {
   max-height: 100%;
   width: auto;
+}
+
+.amcharts-amexport-item {
+  border: 2px solid #777;
+}
+
+.amcharts-amexport-top .amcharts-amexport-item > .amcharts-amexport-menu {
+  background-color: rgba(248, 245, 250, 0.6);
+}
+
+.amcharts-chart-div {
+  padding: 10px;
+}
+
+h1 {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 36pt;
+  text-align: center;
+  cursor: pointer;
+}
+
+h1:hover {
+  text-decoration: underline;
+}
+
+h2 {
+  margin: 10px;
+  font-family: 'Bree Serif', serif;
+}
+
+h2#title:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+h4 {
+  font-family: 'Bree Serif', serif;
+  margin: 4px;
+}
+
+h4#artist {
+  cursor: pointer;
+}
+
+h4#artist:hover {
+  text-decoration: underline;
+}
+
+#year {
+  margin: 2px;
+}
+
+#year:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.search {
+  margin: 10px 0px 10px;
+}
+
+.gallery {
+  margin: 0 auto;
+}
+
+.popupContent {
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  top: 15%;
+  min-height: 510px;
+  margin: 0 auto;
+  background: white;
+  text-align: center;
+  padding: 5px;
+  z-index: 100;
+}
+
+.popImage {
+  max-width: 60%;
+  max-height: 20%;
+  margin: auto auto;
+}
+
+p#popDescription {
+  font-size: 14px;
+}
+
+g {
+  width: 100%;
+}
+
+.about {
+  text-align: center;
+}
+
+p.caption {
+  font-family: 'Bree Serif', sans-serif;
+}
+
+input {
+  width: 200px;
+  height: 35px;
+}
+
+button {
+  background: transparent;
+  font-family: 'Bree Serif', serif;
+  font-size: 12px;
+  margin: 0 5px;
+  padding: 0px 10px;
+  height: 35px;
+  border-radius: 0;
+}
+
+button:hover {
+  border: 2px solid black;
+}
+
+div.search {
+  padding: 10px 0px;
+  display: flex;
+  justify-content: flex-start;
 }

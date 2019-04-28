@@ -5,7 +5,8 @@ import React, { Component } from 'react';
 class Slider extends Component {
   constructor(props) {
     super(props);
-    this.state = { current: true };
+    this.state = { current: true, active: 0 };
+    this.setActive = this.setActive.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -14,8 +15,13 @@ class Slider extends Component {
     }
   }
 
+  setActive(id) {
+    this.setState({ ...this.state, active: id });
+  }
+
+  toggleClass() {}
+
   render() {
-    console.log(this.props);
     return (
       <div className="sliderContainer">
         {this.props.list
