@@ -16,3 +16,7 @@ Stijlize was built using <br>
 [React](https://reactjs.org) <br>
 [Redux](https://redux.js.org/) <br>
 [amCharts v4](https://www.amcharts.com/docs/v4/) <br>
+
+## See it in action
+
+Check out the deployed version [here](http://stijlize-env.hyvfmuajb2.us-east-1.elasticbeanstalk.com/)
