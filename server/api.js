@@ -6,8 +6,7 @@ const buildList = data => {
   const list = data.reduce(function(currentList, currentWork) {
     if (
       currentWork.colorcount &&
-      currentWork.colorcount > 3 &&
-      currentWork.colors.length > 0 &&
+      currentWork.colors.length > 3 &&
       currentWork.primaryimageurl
     ) {
       currentList.push({

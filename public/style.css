@@ -153,6 +153,10 @@ div.search {
   display: block;
 }
 
+.intro {
+  text-align: center;
+}
+
 @media only screen and (max-width: 600px) {
   .allContent {
     width: 80%;
@@ -161,5 +165,11 @@ div.search {
     left: 10%;
     right: 10%;
     top: 12%;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .allContent {
+    width: 40%;
   }
 }

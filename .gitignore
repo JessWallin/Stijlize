@@ -3,3 +3,7 @@ bundle.js
 bundle.js.map
 secrets.js
 sampleq
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

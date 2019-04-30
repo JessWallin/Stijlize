@@ -6,13 +6,18 @@ import { BarLoader } from 'react-spinners';
 class Slider extends Component {
   constructor(props) {
     super(props);
-    this.state = { current: true };
+    this.state = { loading: true };
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.loading !== prevProps.loading) {
-      this.setState({ current: !this.state.current });
+      this.setState({ loading: this.props.loading });
     }
+  }
+
+  setAndLoad(id) {
+    this.props.getArt(id);
+    this.setState({ loading: true });
   }
 
   render() {
@@ -33,7 +38,7 @@ class Slider extends Component {
                       : 'sliderImage'
                   }
                   src={image.imageUrl}
-                  onClick={() => this.props.getArt(image.id)}
+                  onClick={() => this.setAndLoad(image.id)}
                 />
               </div>
             );

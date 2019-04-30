@@ -86,6 +86,14 @@ class disconnectedFrame extends Component {
     return (
       <div className="allContent">
         <h1 onClick={this.toggleAbout}>Stijlize</h1>
+        <div className="intro">
+          <h4 id="intro">
+            Visualize color data from the Harvard Art Museum, de Stijl style.{' '}
+            <br />
+            Search by color, artist, year, or keyword.<br /> Click on the title
+            to see the work of art represented.
+          </h4>
+        </div>
         <div className="gallery">
           {this.state.loading ? (
             <div className="loader">
