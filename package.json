@@ -12,8 +12,8 @@
     "prettify": "prettier --write \"**/*.{js,jsx,json,css,scss,md}\"",
     "postinstall": "touch secrets.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server",
-    "start-web": "npm run build-client & npm run start",
+    "serve": "node server",
+    "start": "npm run build-client & npm run serve",
     "start-dev": "NODE_ENV='development' npm run build-client-watch & NODE_ENV='development' npm run start-server",
     "start-server": "nodemon server -e html,js,scss --ignore public --ignore client"
   },
