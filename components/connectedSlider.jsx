@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { BarLoader } from 'react-spinners';
-// import 'react-bootstrap-carousel/dist/react-bootstrap-carousel.css';
-// import RBCarousel from 'react-bootstrap-carousel';
 
 class Slider extends Component {
   constructor(props) {

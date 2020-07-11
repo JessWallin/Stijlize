@@ -5,10 +5,6 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 
 am4core.useTheme(am4themes_animated);
 
-// A chart instance;
-// Data for the chart;
-// Defined data fields.
-
 class ColorChart extends Component {
   constructor(props) {
     super(props);

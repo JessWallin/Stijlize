@@ -3,7 +3,6 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { load } from '@amcharts/amcharts4/.internal/core/utils/Net';
 
 const SWTICH_ART = 'SWITCH_ART';
 const SWITCH_LIST = 'SWITCH_LIST';
