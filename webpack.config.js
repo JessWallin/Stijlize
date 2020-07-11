@@ -26,4 +26,8 @@ module.exports = {
       },
     ],
   },
+  externals: ['fs'],
+  node: {
+    net: 'empty',
+  },
 };

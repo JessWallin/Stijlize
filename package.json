@@ -13,13 +13,14 @@
     "postinstall": "touch secrets.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server",
+    "start-web": "npm run build-client & npm run start",
     "start-dev": "NODE_ENV='development' npm run build-client-watch & NODE_ENV='development' npm run start-server",
     "start-server": "nodemon server -e html,js,scss --ignore public --ignore client"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@amcharts/amcharts4": "^4.4.1",
+    "@amcharts/amcharts4": "4.4.1",
     "axios": "^0.18.0",
     "compression": "^1.7.3",
     "connect-session-sequelize": "^6.0.0",

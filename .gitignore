@@ -1,9 +1,19 @@
 node_modules
+
+
+*.bundle.js
+*.bundle.js.*
 bundle.js
 bundle.js.map
+vendors~xlsx.bundle.js
+vendors~xlsx.bundle.js.map
+xlsx.*.js
+xlsx.*.js.*
+
 secrets.js
 sampleq
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
