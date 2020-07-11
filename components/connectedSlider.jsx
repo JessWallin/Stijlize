@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BarLoader } from 'react-spinners';
 
+
 class Slider extends Component {
   constructor(props) {
     super(props);
